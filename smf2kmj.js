@@ -79,8 +79,8 @@ function smf2json(data) {
 	return data;
 }
 
-// strip irrelevant information from json
-// organize data structure into something sane
+// pull relevant information from json
+// output in krunker format
 function distill(data) {
 	data = data.Root;
 	var positionVals = {};
@@ -89,12 +89,9 @@ function distill(data) {
 
 	var regEntities = /^Entity/g;
 	var regSolids   = /^Solid/g;
-	var regObjects  = /^Solid||Entity/g; // not working
 	var regFaces    = /^Face/g;
 	var regPlanes   = /^Plane/g;
 	var regVertexes = /^Vertex/g;
-	// var solids, entities, faces, vertexes;
-
 
 
 	filterJSON(data, regSolids, function(solids) {
@@ -115,21 +112,15 @@ function distill(data) {
 				}
 			});
 
+			// create krunker objects string
 			kmjObjects.push({
 				"p": calculateCenter(positionVals[solids[i]]),
-				"s": calculateSize(sizeVals[solids[i]]),
+				"s": calculateSize(sizeVals[solids[i]])
 				// "c": "color"
 			});
 		}
 	});
 
-
-	// var solids = filterJSON(data, regSolids, function(solids) {
-
-	// });
-	// var entities = filterJSON(data, regEntities);
-
-	// data = filterJSON(data, regVertexes);
 	return kmjObjects;
 
 	// https://stackoverflow.com/questions/33218359/get-all-json-keys-that-match-a-pattern
@@ -146,20 +137,20 @@ function distill(data) {
 	function calculateCenter(data) {
 			data = [...new Set(data)]; // deduplicate
 
-			var x = 0;
-			var y = 0;
-			var z = 0;
+			var x = 0; 
+			var y = 0; 
+			var z = 0; 
 
 			for (m=0;m<data.length;m++) {
 				var temp = data[m].split(" ");
 				x += parseInt(temp[0]);
-				z += parseInt(temp[1]);
-				y += parseInt(temp[2]);
+				y += parseInt(temp[1]);
+				z += parseInt(temp[2]);
 			}
 
-		// need to find bottom face center
-
-		return [x/8, y/8, z/8];
+		// IMPORTANT: dimensions are swapped x,y,z = y,z,x
+		// BE SURE TO RETURN VALUES MAPPED IN THIS ORDER FOR OTHER FUNCTIONS RETURNING COORDS
+		return [y/8, z/8, x/8];
 	}
 
 	function calculateSize(data) {
@@ -175,7 +166,7 @@ function distill(data) {
 			y = data[0] + data[1];
 			z = data[4] + data[5];
 
-		return [x, y, z];
+		return [y, z, x];
 	}
 
 }
