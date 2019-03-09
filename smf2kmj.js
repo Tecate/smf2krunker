@@ -114,7 +114,7 @@ function distill(data) {
 
 			// create krunker objects string
 			kmjObjects.push({
-				"p": calculateCenter(positionVals[solids[i]]),
+				"p": calculateCenter(positionVals[solids[i]], sizeVals[solids[i]]),
 				"s": calculateSize(sizeVals[solids[i]])
 				// "c": "color"
 			});
@@ -134,23 +134,30 @@ function distill(data) {
 		callback(filtered);
 	}
 
-	function calculateCenter(data) {
-			data = [...new Set(data)]; // deduplicate
+	function calculateCenter(positionVals, sizeVals) {
+			var dedupedData = [...new Set(positionVals)]; // deduplicate
 
 			var x = 0; 
 			var y = 0; 
 			var z = 0; 
 
-			for (m=0;m<data.length;m++) {
-				var temp = data[m].split(" ");
-				x += parseInt(temp[0]);
-				y += parseInt(temp[1]);
-				z += parseInt(temp[2]);
+
+			for (m=0;m<dedupedData.length;m++) {
+				var temp = dedupedData[m].split(" ");
+				// round to nearest number for simplicity
+				x += Math.round(parseFloat(temp[0]));
+				y += Math.round(parseFloat(temp[1]));
+				z += Math.round(parseFloat(temp[2]));
 			}
+
+			x = x/8;
+			y = y/8;
+			z = z/8;
+			z = z - (Math.round(parseFloat(calculateSize(sizeVals)[1])/2)); // position of bottom face 
 
 		// IMPORTANT: dimensions are swapped x,y,z = y,z,x
 		// BE SURE TO RETURN VALUES MAPPED IN THIS ORDER FOR OTHER FUNCTIONS RETURNING COORDS
-		return [y/8, z/8, x/8];
+		return [y, z, x];
 	}
 
 	function calculateSize(data) {
@@ -159,7 +166,8 @@ function distill(data) {
 			var z = 0;
 
 			for (m=0;m<data.length;m++) {
-				data[m] = parseInt(data[m]);
+				// round to nearest number for simplicity
+				data[m] = Math.round(parseFloat(data[m]));
 			}
 
 			x = data[2] + data[3];
