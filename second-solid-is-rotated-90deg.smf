@@ -1,0 +1,495 @@
+﻿Root
+{
+    "ID" "1"
+    "IsSelected" "False"
+    "ParentID" ""
+    EntityData
+    {
+        "wad" ""
+        "Name" "worldspawn"
+        "Flags" "0"
+    }
+    PointEntityGameDataBoundingBoxProvider
+    {
+    }
+    VisgroupHidden
+    {
+        "IsHidden" "False"
+    }
+    Solid
+    {
+        "ID" "93"
+        "IsSelected" "False"
+        "ParentID" "1"
+        ObjectColor
+        {
+            "Color" "0 238 166"
+        }
+        Face
+        {
+            "ID" "559"
+            Plane
+            {
+                "Normal" "0 -1 0"
+                "DistanceFromOrigin" "80"
+            }
+            Texture
+            {
+                "Name" "ba_babtech8"
+                "Rotation" "0"
+                "UAxis" "1 0 0"
+                "VAxis" "0 0 -1"
+                "XScale" "0.85"
+                "XShift" "-263.529419"
+                "YScale" "0.85"
+                "YShift" "37.6470566"
+            }
+            Vertex
+            {
+                "Position" "-112 -80 32"
+            }
+            Vertex
+            {
+                "Position" "112 -80 32"
+            }
+            Vertex
+            {
+                "Position" "112 -80 -32"
+            }
+            Vertex
+            {
+                "Position" "-112 -80 -32"
+            }
+        }
+        Face
+        {
+            "ID" "560"
+            Plane
+            {
+                "Normal" "0 1 0"
+                "DistanceFromOrigin" "-64"
+            }
+            Texture
+            {
+                "Name" "ba_babtech8"
+                "Rotation" "0"
+                "UAxis" "-1 0 0"
+                "VAxis" "0 0 -1"
+                "XScale" "0.85"
+                "XShift" "263.529419"
+                "YScale" "0.85"
+                "YShift" "37.6470566"
+            }
+            Vertex
+            {
+                "Position" "112 -64 32"
+            }
+            Vertex
+            {
+                "Position" "-112 -64 32"
+            }
+            Vertex
+            {
+                "Position" "-112 -64 -32"
+            }
+            Vertex
+            {
+                "Position" "112 -64 -32"
+            }
+        }
+        Face
+        {
+            "ID" "561"
+            Plane
+            {
+                "Normal" "-1 0 0"
+                "DistanceFromOrigin" "112"
+            }
+            Texture
+            {
+                "Name" "ba_babtech8"
+                "Rotation" "0"
+                "UAxis" "0 -1 0"
+                "VAxis" "0 0 -1"
+                "XScale" "0.85"
+                "XShift" "56.4705849"
+                "YScale" "0.85"
+                "YShift" "37.6470566"
+            }
+            Vertex
+            {
+                "Position" "-112 -64 32"
+            }
+            Vertex
+            {
+                "Position" "-112 -80 32"
+            }
+            Vertex
+            {
+                "Position" "-112 -80 -32"
+            }
+            Vertex
+            {
+                "Position" "-112 -64 -32"
+            }
+        }
+        Face
+        {
+            "ID" "562"
+            Plane
+            {
+                "Normal" "1 0 0"
+                "DistanceFromOrigin" "112"
+            }
+            Texture
+            {
+                "Name" "ba_babtech8"
+                "Rotation" "0"
+                "UAxis" "0 1 0"
+                "VAxis" "0 0 -1"
+                "XScale" "0.85"
+                "XShift" "-56.4705849"
+                "YScale" "0.85"
+                "YShift" "37.6470566"
+            }
+            Vertex
+            {
+                "Position" "112 -80 32"
+            }
+            Vertex
+            {
+                "Position" "112 -64 32"
+            }
+            Vertex
+            {
+                "Position" "112 -64 -32"
+            }
+            Vertex
+            {
+                "Position" "112 -80 -32"
+            }
+        }
+        Face
+        {
+            "ID" "563"
+            Plane
+            {
+                "Normal" "0 0 1"
+                "DistanceFromOrigin" "32"
+            }
+            Texture
+            {
+                "Name" "ba_babtech8"
+                "Rotation" "0"
+                "UAxis" "1 0 0"
+                "VAxis" "0 -1 0"
+                "XScale" "0.85"
+                "XShift" "-263.529419"
+                "YScale" "0.85"
+                "YShift" "56.4705849"
+            }
+            Vertex
+            {
+                "Position" "-112 -64 32"
+            }
+            Vertex
+            {
+                "Position" "112 -64 32"
+            }
+            Vertex
+            {
+                "Position" "112 -80 32"
+            }
+            Vertex
+            {
+                "Position" "-112 -80 32"
+            }
+        }
+        Face
+        {
+            "ID" "564"
+            Plane
+            {
+                "Normal" "0 0 -1"
+                "DistanceFromOrigin" "32"
+            }
+            Texture
+            {
+                "Name" "ba_babtech8"
+                "Rotation" "0"
+                "UAxis" "-1 0 0"
+                "VAxis" "0 -1 0"
+                "XScale" "0.85"
+                "XShift" "263.529419"
+                "YScale" "0.85"
+                "YShift" "56.4705849"
+            }
+            Vertex
+            {
+                "Position" "-112 -80 -32"
+            }
+            Vertex
+            {
+                "Position" "112 -80 -32"
+            }
+            Vertex
+            {
+                "Position" "112 -64 -32"
+            }
+            Vertex
+            {
+                "Position" "-112 -64 -32"
+            }
+        }
+        VisgroupHidden
+        {
+            "IsHidden" "False"
+        }
+    }
+    Solid
+    {
+        "ID" "94"
+        "IsSelected" "True"
+        "ParentID" "1"
+        ObjectColor
+        {
+            "Color" "0 238 166"
+        }
+        Face
+        {
+            "ID" "565"
+            Plane
+            {
+                "Normal" "1 -3.40598E-08 0"
+                "DistanceFromOrigin" "-80"
+            }
+            Texture
+            {
+                "Name" "ba_babtech8"
+                "Rotation" "0"
+                "UAxis" "0 1 0"
+                "VAxis" "0 0 -1"
+                "XScale" "0.85"
+                "XShift" "-414.117645"
+                "YScale" "0.85"
+                "YShift" "37.6470566"
+            }
+            Vertex
+            {
+                "Position" "-80 16 32"
+            }
+            Vertex
+            {
+                "Position" "-79.99999 240 32"
+            }
+            Vertex
+            {
+                "Position" "-79.99999 240 -32"
+            }
+            Vertex
+            {
+                "Position" "-80 16 -32"
+            }
+        }
+        Face
+        {
+            "ID" "566"
+            Plane
+            {
+                "Normal" "-1 3.40598E-08 0"
+                "DistanceFromOrigin" "96"
+            }
+            Texture
+            {
+                "Name" "ba_babtech8"
+                "Rotation" "0"
+                "UAxis" "0 -1 0"
+                "VAxis" "0 0 -1"
+                "XScale" "0.85"
+                "XShift" "414.117645"
+                "YScale" "0.85"
+                "YShift" "37.6470566"
+            }
+            Vertex
+            {
+                "Position" "-95.99999 240 32"
+            }
+            Vertex
+            {
+                "Position" "-96 16 32"
+            }
+            Vertex
+            {
+                "Position" "-96 16 -32"
+            }
+            Vertex
+            {
+                "Position" "-95.99999 240 -32"
+            }
+        }
+        Face
+        {
+            "ID" "567"
+            Plane
+            {
+                "Normal" "0 -1 0"
+                "DistanceFromOrigin" "-16"
+            }
+            Texture
+            {
+                "Name" "ba_babtech8"
+                "Rotation" "0"
+                "UAxis" "1 0 0"
+                "VAxis" "0 0 -1"
+                "XScale" "0.85"
+                "XShift" "244.705872"
+                "YScale" "0.85"
+                "YShift" "37.6470566"
+            }
+            Vertex
+            {
+                "Position" "-96 16 32"
+            }
+            Vertex
+            {
+                "Position" "-80 16 32"
+            }
+            Vertex
+            {
+                "Position" "-80 16 -32"
+            }
+            Vertex
+            {
+                "Position" "-96 16 -32"
+            }
+        }
+        Face
+        {
+            "ID" "568"
+            Plane
+            {
+                "Normal" "0 1 0"
+                "DistanceFromOrigin" "240"
+            }
+            Texture
+            {
+                "Name" "ba_babtech8"
+                "Rotation" "0"
+                "UAxis" "-1 0 0"
+                "VAxis" "0 0 -1"
+                "XScale" "0.85"
+                "XShift" "-244.705872"
+                "YScale" "0.85"
+                "YShift" "37.6470566"
+            }
+            Vertex
+            {
+                "Position" "-79.99999 240 32"
+            }
+            Vertex
+            {
+                "Position" "-95.99999 240 32"
+            }
+            Vertex
+            {
+                "Position" "-95.99999 240 -32"
+            }
+            Vertex
+            {
+                "Position" "-79.99999 240 -32"
+            }
+        }
+        Face
+        {
+            "ID" "569"
+            Plane
+            {
+                "Normal" "0 0 1"
+                "DistanceFromOrigin" "32"
+            }
+            Texture
+            {
+                "Name" "ba_babtech8"
+                "Rotation" "0"
+                "UAxis" "0 1 0"
+                "VAxis" "1 0 0"
+                "XScale" "0.85"
+                "XShift" "-414.117645"
+                "YScale" "0.85"
+                "YShift" "244.705872"
+            }
+            Vertex
+            {
+                "Position" "-96 16 32"
+            }
+            Vertex
+            {
+                "Position" "-95.99999 240 32"
+            }
+            Vertex
+            {
+                "Position" "-79.99999 240 32"
+            }
+            Vertex
+            {
+                "Position" "-80 16 32"
+            }
+        }
+        Face
+        {
+            "ID" "570"
+            Plane
+            {
+                "Normal" "0 0 -1"
+                "DistanceFromOrigin" "32"
+            }
+            Texture
+            {
+                "Name" "ba_babtech8"
+                "Rotation" "0"
+                "UAxis" "0 -1 0"
+                "VAxis" "1 0 0"
+                "XScale" "0.85"
+                "XShift" "414.117645"
+                "YScale" "0.85"
+                "YShift" "244.705872"
+            }
+            Vertex
+            {
+                "Position" "-80 16 -32"
+            }
+            Vertex
+            {
+                "Position" "-79.99999 240 -32"
+            }
+            Vertex
+            {
+                "Position" "-95.99999 240 -32"
+            }
+            Vertex
+            {
+                "Position" "-96 16 -32"
+            }
+        }
+        VisgroupHidden
+        {
+            "IsHidden" "False"
+        }
+    }
+}
+Selection
+{
+    "SelectedObjects" "94"
+}
+FaceSelection
+{
+    "SelectedFaces" ""
+}
+ActiveTexture
+{
+    "Name" "ba_babtech8"
+}
+Grid
+{
+    "SnapToGrid" "True"
+}
