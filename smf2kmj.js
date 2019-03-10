@@ -44,7 +44,7 @@ function smf2json(data) {
 			if (data[i+1].trim().startsWith("}")) {} else
 				data[i] = data[i] + ","; // add commas after key:value pairs if appropriate
 		} else
-			data[i] = "\"" + data[i] + "\":"; // i forget what this does but it's important
+			data[i] = "\"" + data[i] + "\":"; // add quotes to keys of objects (anything starting without ", {, })
 	}
 
 	data = "{" + data.join('') + "}"; // back to string
