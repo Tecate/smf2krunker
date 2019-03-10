@@ -7,15 +7,18 @@ fs.readFile(filename, 'utf8', function(err, data) {
 	console.log('using', filename);
 
 	var jsonData = smf2json(data); // unaltered smf information
-	var distilledData = distill(jsonData); // converted data to krunker map spec
-	var objectData = JSON.stringify(distilledData); 
+	var convertedSolids = convertSolids(jsonData);
+	var convertedPointEntities = convertPointEntities(jsonData);
+	var objectData = JSON.stringify(convertedSolids); 
+	var spawnsData = JSON.stringify(convertedPointEntities); // WRONG... CHANGE THIS AFTER TESTING
 
 	console.log("Object data:");
-	console.log(require('util').inspect(distilledData, true, 10)); // debugging
+	console.log(require('util').inspect(convertedSolids, true, 10)); // debugging
 
 	console.log("Copy below:");
 	// generic map headers for now
-	console.log('{"name":"New Krunker Map","modURL":"","shadowR":1024,"ambient":9937064,"light":15923452,"sky":14477549,"fog":9280160,"fogD":900,"camPos":[0,0,0],"spawns":[],"objects":' 
+	console.log('{"name":"New Krunker Map","modURL":"","shadowR":1024,"ambient":9937064,"light":15923452,"sky":14477549,"fog":9280160,"fogD":900,"camPos":[0,0,0],' +
+		'"spawns":' + spawnsData + ',"objects":' 
 		+ objectData + '}');
 });
 
@@ -50,6 +53,8 @@ function smf2json(data) {
 	data = "{" + data.join('') + "}"; // back to string
 
 	// can't have duplicate key names in a js object
+	// this thing is fucking the json up by appending numbers to stuff that it doesn't need to
+	// will have to fix later
 	// https://stackoverflow.com/questions/38992106/parsing-nested-json-objects-with-duplicate-keys-php-or-js
 	var re = /\"(\w+?)(?=\":\{)/g, names = {}, dups;
 
@@ -79,19 +84,17 @@ function smf2json(data) {
 	return data;
 }
 
-// pull relevant information from json
-// output in krunker format
-function distill(data) {
+var regEntities = /^Entity([0-9]?)+/g;
+var regSolids   = /^Solid/g;
+var regFaces    = /^Face/g;
+var regPlanes   = /^Plane/g;
+var regVertexes = /^Vertex/g;
+
+function convertSolids(data) {
 	data = data.Root; // ignore the top level "Root" object
 	var positionVals = {};
 	var sizeVals     = {};
 	var kmjObjects   = []; // this gets returned
-
-	var regEntities = /^Entity/g;
-	var regSolids   = /^Solid/g;
-	var regFaces    = /^Face/g;
-	var regPlanes   = /^Plane/g;
-	var regVertexes = /^Vertex/g;
 
 	// iterating through the json to get the values we need
 	filterJSON(data, regSolids, function(solids) {
@@ -116,70 +119,116 @@ function distill(data) {
 			kmjObjects.push({
 				"p": calculateCenter(positionVals[solids[i]], sizeVals[solids[i]]), // do math for centers
 				"s": calculateSize(sizeVals[solids[i]]) // math for size
+				// "id": 'entity id'
 				// "c": "color"
+				// "t": "texture"
+				// "r": "rotation"
 			});
 		}
 	});
 
 	return kmjObjects;
-
-	// https://stackoverflow.com/questions/33218359/get-all-json-keys-that-match-a-pattern
-	function filterJSON(obj, filter, callback) {
-		var filtered = [];
-		for (key in obj) {
-			if (key.match(filter)) 
-				filtered.push(key);
-		}
-		callback(filtered);
-	}
-
-	function calculateCenter(positionVals, sizeVals) {
-			var dedupedData = [...new Set(positionVals)]; // deduplicate
-
-			var x = 0; 
-			var y = 0; 
-			var z = 0; 
-
-
-			for (m=0;m<dedupedData.length;m++) {
-				var temp = dedupedData[m].split(" ");
-				// round to nearest number for simplicity
-				x += Math.round(parseFloat(temp[0]));
-				y += Math.round(parseFloat(temp[1]));
-				z += Math.round(parseFloat(temp[2]));
-			}
-
-			x = x/8;
-			y = y/8;
-			z = z/8;
-			z = z - (Math.round(parseFloat(calculateSize(sizeVals)[1])/2)); // position of bottom face 
-
-		// IMPORTANT: dimensions are swapped x,y,z = y,z,x
-		// BE SURE TO RETURN VALUES MAPPED IN THIS ORDER FOR OTHER FUNCTIONS RETURNING COORDS
-		return [y, z, x];
-	}
-
-	function calculateSize(data) {
-			var x = 0;
-			var y = 0;
-			var z = 0;
-
-			for (m=0;m<data.length;m++) {
-				// round to nearest number for simplicity
-				data[m] = Math.round(parseFloat(data[m]));
-			}
-
-			x = data[2] + data[3];
-			y = data[0] + data[1];
-			z = data[4] + data[5];
-
-		return [y, z, x];
-	}
-
 }
 
-function d2r(degrees)
-{
-  var pi = Math.PI;
-  return degrees * (pi/180);
+// only for point entities
+function convertPointEntities(data) {
+	data = data.Root; // ignore the top level "Root" object
+	var kmjSpawns = [];
+
+	// this is so fucking ghetto
+	filterJSON(data, regEntities, function(entities) {
+		for(i=0;i<entities.length;i++) {
+			if (entities[i] != "EntityData1") { // ignore first EntityData object
+				filterJSON(data[entities[i]], regEntities, function(entityData) {
+					for(j=0;j<entityData.length;j++) {
+						if (entityIDmap(data[entities[i]][entityData[j]].Name) == 5){
+							filterJSON(data[entities[i]], /^Origin/, function(origin) {
+								kmjSpawns.push(reorderCords(data[entities[i]][origin[0]].Location));
+							});
+						}
+					}
+				});
+			}
+		}
+	});
+	console.log(kmjSpawns);
+	return kmjSpawns;
+}
+
+// https://stackoverflow.com/questions/33218359/get-all-json-keys-that-match-a-pattern
+function filterJSON(obj, filter, callback) {
+	var filtered = [];
+	for (key in obj) {
+		if (key.match(filter)) 
+			filtered.push(key);
+	}
+	callback(filtered);
+}
+
+// calculate center coordinates from face vertex coordinates
+function calculateCenter(positionVals, sizeVals) {
+		var dedupedData = [...new Set(positionVals)]; // deduplicate
+
+		var x = 0; 
+		var y = 0; 
+		var z = 0; 
+
+
+		for (m=0;m<dedupedData.length;m++) {
+			var temp = dedupedData[m].split(" ");
+			// round to nearest number for simplicity
+			x += Math.round(parseFloat(temp[0]));
+			y += Math.round(parseFloat(temp[1]));
+			z += Math.round(parseFloat(temp[2]));
+		}
+
+		x = x/8;
+		y = y/8;
+		z = z/8;
+		z = z - (Math.round(parseFloat(calculateSize(sizeVals)[1])/2)); // position of bottom face 
+
+	// IMPORTANT: dimensions are swapped x,y,z = y,z,x
+	// BE SURE TO RETURN VALUES MAPPED IN THIS ORDER FOR OTHER FUNCTIONS RETURNING COORDS
+	return [y, z, x];
+}
+
+// calculate size of solids
+function calculateSize(data) {
+		var x = 0;
+		var y = 0;
+		var z = 0;
+
+		for (m=0;m<data.length;m++) {
+			// round to nearest number for simplicity
+			data[m] = Math.round(parseFloat(data[m]));
+		}
+
+		x = data[2] + data[3];
+		y = data[0] + data[1];
+		z = data[4] + data[5];
+
+	return [y, z, x];
+}
+
+function entityIDmap(name) {
+	if (name == "info_spawn")
+		return 5;
+	if (name == "prop_crate")
+		return 0;
+}
+
+function reorderCords(data) {
+	if (typeof data !== "array") // untested
+		data = data.split(" ");
+
+	var x = Math.round(parseFloat(data[0]));
+	var y = Math.round(parseFloat(data[1]));
+	var z = Math.round(parseFloat(data[2]));
+
+	return [y, z, x];
+}
+
+function d2r(degrees){
+	var pi = Math.PI;
+	return degrees * (pi/180);
 }

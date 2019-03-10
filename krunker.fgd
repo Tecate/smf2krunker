@@ -1,4 +1,4 @@
-@PointClass size(-4 -4 -4, 4 4 4) = info_spawn : "Player Spawn Point" 
+@PointClass size(-4 -4 -4, 4 4 4) = info_spawn : "Player Spawn Point" // id = 5
 [
 	team(choices) : "Team" : 0 =
 	[
@@ -8,7 +8,7 @@
 	]
 ]
 
-@PointClass size(-6 -6 0, 6 6 12) = prop_crate : "Crate prop" 
+@PointClass size(-6 -6 0, 6 6 12) = prop_crate : "Crate prop" // id = 0
 [
 	team(choices) : "Team" : 0 =
 	[
@@ -18,3 +18,26 @@
 	]
 ]
 
+@PointClass size(-2 -1 0, 4 2 12) = prop_ladder : "Ladder" // id = 3
+[
+]
+
+@PointClass size(-4 -4 -4, 4 4 4) = info_camera : "Camera" // id = 6
+[
+]
+
+@SolidClass = func_deathzone : "Death Zone" // id =12
+[
+]
+
+@SolidClass = func_scorezone : "Score Zone" // id = 10
+[
+]
+
+@SolidClass = func_particles : "Particle Zone" // id = 13
+[
+]
+
+@SolidClass = func_objective : "Hardpoint Objective Zone" // id = 14
+[
+]
